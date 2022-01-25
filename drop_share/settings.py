@@ -30,8 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['drop-share2022.herokuapp.com', 'localhost']
-
+ALLOWED_HOSTS = ["drop-share2022.herokuapp.com", "localhost"]
 
 # Application definition
 
@@ -44,6 +43,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'django_summernote',
     'DS_blog',
 ]
 
@@ -110,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+CSRF_COOKIE_SECURE = False
 
 
 # Internationalization
