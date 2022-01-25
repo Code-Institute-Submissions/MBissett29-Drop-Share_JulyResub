@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<h2>Blogs Page</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                {% for post in post_list %}
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <div class="image-containter">
+                            {% if "placeholder" in post.featured_image.url %}
+                            <img class= "card-img-top" src="https://images.prismic.io/frameworkmarketplace/c9f009af-2392-4899-b69e-e6ef5c2d4a8c_shared-social-thumbnail-1200x630.jpg?auto=compress,format" alt="Image of laptop on a desk">
+                            {% else %} 
+                            <img class= "card-img -top" src=" {{ post.feautured_image.url }}" alt="">
+                            {% endif %} 
+                            <div>
+                                <p class="author"> Author: {{ post.author }}</p>
+                            </div>
+                        </div>
+                        <a href="#" class="post-link">
+                            <h3 class ="card-title">{{ post.title }}
+                            <p class ="card-text">{{ post.excerpt }}
+                        </a>
+                        <p class="card-text font-italic">{{ post.created_on }}
+                            <i class="far fa-thumbs-up"></i>{{ post.number_of_likes }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:3 %}
+        </div>
+        <div class="row">
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% if is_paginated %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+
+{% endblock %}
+
