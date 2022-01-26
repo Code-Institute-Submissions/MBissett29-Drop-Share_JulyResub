@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-8 align-items-start post-heading">
+            <h3 class="blog-title"> {{ post.title }}</h3>
+            <small class="blog-sub-title"> By: {{ post.author }} | {{ post.created_on }}</small>
+            <strong><i class="far fa-thumbs-up"></i>{{ post.number_of_likes }}</strong>
+            <p class="col-8 align-items-start post-content">
+                {{ post.content | safe }}
+            </p>
+        </div>
+        <div class="col-4 align-items-end post-img">
+            {% if "placeholder" in post.featured_image.url %}
+            <img class="img-thumbnail rounded float-end"
+                src="https://images.prismic.io/frameworkmarketplace/c9f009af-2392-4899-b69e-e6ef5c2d4a8c_shared-social-thumbnail-1200x630.jpg?auto=compress,format"
+                alt="Image of laptop on a desk">
+            {% else %}
+            <img class="img-thumbnail rounded float-end" src=" {{ post.feautured_image.url }}" alt="">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="container"></div>
+<div class="row">
+    <div class="m-5 align-items-start">
+        <h5>Comments:</h5>
+        <br>
+        {% for comment in comments %}
+        <div class="comments">
+            <p>
+                {{ comment.name }} | {{ comment.created_on }} wrote:
+            </p>
+            <p>
+                {{ comment.body }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+</div>
+
+
+{% endblock %}
