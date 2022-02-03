@@ -4,7 +4,9 @@ from cloudinary.models import CloudinaryField
 
 STATUS = ((0, "Draft"), (1, "Published"))
 
+
 class Post(models.Model):
+
 
     title = models.CharField(max_length=180, unique=True)
     slug = models.SlugField(max_length=180, unique=True)
@@ -41,3 +43,17 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment {self.body} by {self.name}"
+
+
+class UserPost(models.Model):
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, 
+        related_name='user_post'
+        )
+    title = models.CharField(max_length=500)
+    content = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    url = models.SlugField(max_length=500, unique=True, blank=True, editable=False)
+
+    def __str__(self):
+        return self
