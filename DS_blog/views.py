@@ -1,8 +1,10 @@
-from django.shortcuts import render, get_object_or_404
-from django.views import generic, View, CreateView
-from .models import Post
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, View
+from .models import Post, UserPost
+from .forms import UserPostForm, CommentForm
+from django.http import HttpResponseRedirect
 
-class PostList(generic.ListView):
+class PostList(ListView):
     model = Post
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
@@ -25,11 +27,19 @@ class PostDetail(View):
             {
                 "post": post,
                 "comments": comments,
-                "liked": liked
+                "liked": liked,
+                "comment_form": CommentForm()
             },
         )
 
-class PostBlogView(CreateView):
-    model = Post
-    template = 'user_post.html'
-    fields = '__all__'
+
+
+def UserPost_Create(request):
+    if request.method == 'POST':
+        title = request.POST.get('blog_title')
+        content = request.POST.get('blog_content')
+        file = request.POST.get('add_image_file')
+        UserPost.objects.create(title=title, content=content)
+
+        return redirect('home')
+    return render(request, "post_blog.html",)
