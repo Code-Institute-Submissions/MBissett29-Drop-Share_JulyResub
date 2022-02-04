@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Supermercado+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+body {
+    font-style: ;
+}
+
+.page-title {
+   font-family: 'Nanum Gothic', sans-serif;
+   font-weight: 800;
+}
+
+.navbar-brand {
+    font-family: 'Supermercado One', cursive;
+}
