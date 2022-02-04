@@ -8,6 +8,7 @@ STATUS = ((0, "Draft"), (1, "Published"))
 
 
 class Post(models.Model):
+    """This creates a class base model for a blog post"""
 
     title = models.CharField(max_length=180, unique=True)
     slug = models.SlugField(max_length=180, unique=True)
@@ -20,20 +21,24 @@ class Post(models.Model):
     status = models.IntegerField(choices=STATUS, default=0)
     likes = models.ManyToManyField(User, related_name='ds_blog_likes', blank=True)
     class Meta:
-        ordering = ['-created_on']
+        """This orders the posts in ascending order"""
+        ordering = ['created_on']
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self): 
+    def get_absolute_url(self):
+        """Returns user back to home page after submitting a post"""
         return reverse('home')
 
     def number_of_likes(self):
+        """Reflects the number of likes on the specific post"""
         return self.likes.count()
 
     
 
 class Comment(models.Model):
+    """Creates a class base model for the comments"""
     
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=50)
@@ -41,23 +46,12 @@ class Comment(models.Model):
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
-
+    
     class Meta:
-        ordering = ['created_on']
+        """This orders the comments in descending order"""
+        ordering = ['-created_on']
 
     def __str__(self):
+        """This returns the comment body and the users name"""
         return f"Comment {self.body} by {self.name}"
 
-
-class UserPost(models.Model):
-    author = models.ForeignKey(
-        User, on_delete=models.CASCADE, 
-        related_name='user_post'
-        )
-    title = models.CharField(max_length=500)
-    content = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    url = models.SlugField(max_length=500, unique=True, blank=True, editable=False)
-
-    def __str__(self):
-        return self
