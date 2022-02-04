@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+{% load crispy_forms_tags %}
 <br>
 <div class="container">
     <div class="row">
@@ -27,20 +29,43 @@
 <br>
 
 <div class="container"></div>
-<div class="row">
-    <div class="m-5 align-items-start">
-        <h5>Comments:</h5>
-        <br>
-        {% for comment in comments %}
-        <div class="comments">
-            <p>
-                {{ comment.name }} | {{ comment.created_on }} wrote:
-            </p>
-            <p>
-                {{ comment.body }}
-            </p>
+    <div class="row">
+        <div class="m-5 align-items-start">
+            <h4>Comments:</h4>
+            <br>
+            {% for comment in comments %}
+            <div class="comments">
+                <strong>
+                    {{ comment.name }} | {{ comment.created_on }} wrote:
+                </strong>
+                <p>
+                    {{ comment.body }}
+                </p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+    </div>
+    <div class="m-5 align-items-end">
+        {% if comment %}
+        <div class="alert alert-success" role="alert">
+            Your comment is awaiting approval
+        </div>
+        {% else %}
+        {% if user.is_authenticated %}
+        <h4>Post a comment:</h4>
+        <p>Commenting as: {{ user.username }}</p>
+        <form method="post">
+            {{ comment_form | crispy }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning form control text-dark right"></button>
+        </form>
+        {% endif %}
+        {% endif %}
+
+
+        
+    </div>
+
     </div>
 
 </div>
