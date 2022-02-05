@@ -80,8 +80,8 @@ class UserPost_Create(CreateView):
 
     def get(self, request, *args, **kwargs):
         """This grabs the form of the blog entry"""
-        form = UserPostForm()
-        context = {'form': form}
+        UserPost_form = UserPostForm()
+        context = {'UserPost_form': UserPostForm}
         return render(request, "post_blog.html", context=context)
 
     def form_valid(self, form):
