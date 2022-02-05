@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import ListView, View, CreateView
+from django.http import HttpResponseRedirect
 from .models import Post, Comment
 from .forms import UserPostForm, CommentForm
-from django.http import HttpResponseRedirect
 from django.utils.text import slugify
 
 class PostList(ListView):
@@ -57,7 +57,6 @@ class PostDetail(View):
         else:
             comment_form = CommentForm()
 
-
         return render(
             request,
             "user_post.html",
@@ -73,7 +72,6 @@ class PostDetail(View):
 
 class UserPost_Create(CreateView):
     """This creates the the view for blog post entry page"""
-    
     model = Post
     template_name = 'post_blog.html'
     fields = ('title', 'content', 'featured_image')
@@ -82,7 +80,7 @@ class UserPost_Create(CreateView):
         """This grabs the form of the blog entry"""
         UserPost_form = UserPostForm()
         context = {'UserPost_form': UserPostForm}
-        return render(request, "post_blog.html", context=context)
+        return render(request, "post_blog.html", context=context, )
 
     def form_valid(self, form):
         """This saves the blog entry and saves and returns the user"""
@@ -90,3 +88,14 @@ class UserPost_Create(CreateView):
         form.instance.author = self.request.user
         form.instance.slug = slugify(form.instance.title)
         return super().form_valid(form)
+
+class PostLike(View):
+    
+    def post(self, request, slug, *args, **kwargs):
+        post = get_object_or_404(Post, slug=slug)
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+
+        return HttpResponseRedirect(reverse('user_post', args=[slug]))
