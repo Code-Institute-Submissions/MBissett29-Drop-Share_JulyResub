@@ -16,3 +16,4 @@ class UserPostForm(forms.ModelForm):
         """This selects the model of post and uses specifc fields"""
         model = Post
         fields = ('title', "content", "featured_image",)
+
