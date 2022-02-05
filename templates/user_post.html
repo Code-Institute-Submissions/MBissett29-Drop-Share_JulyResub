@@ -10,17 +10,14 @@
             <h2 class="page-title"> {{ post.title }}</h2>
             <small class="blog-sub-title"> By: {{ post.author }} | {{ post.created_on }}</small>
             <strong><i class="far fa-thumbs-up"></i>{{ post.number_of_likes }}</strong>
-            <p class="col-8 align-items-start post-content">
-                {{ post.content | safe }}
-            </p>
         </div>
-        <div class="col-4 align-items-end post-img">
+        <div class="d-none d-md-block col-md-6 masthead-image post-img">
             {% if "placeholder" in post.featured_image.url %}
             <img class="img-thumbnail rounded float-end"
                 src="https://images.prismic.io/frameworkmarketplace/c9f009af-2392-4899-b69e-e6ef5c2d4a8c_shared-social-thumbnail-1200x630.jpg?auto=compress,format"
                 alt="Image of laptop on a desk">
             {% else %}
-            <img class="img-thumbnail rounded float-end" src=" {{ post.feautured_image.url }}" alt="">
+            <img class="d-none d-md-block col-md-6 masthead-image post-img rounded float-end" src=" {{ post.featured_image.url }}" alt="">
             {% endif %}
         </div>
     </div>
@@ -28,45 +25,66 @@
 
 <br>
 
-<div class="container"></div>
+<div class="container">
     <div class="row">
-        <div class="m-5 align-items-start">
-            <h4>Comments:</h4>
-            <br>
-            {% for comment in comments %}
-            <div class="comments">
-                <strong>
-                    {{ comment.name }} | {{ comment.created_on }} wrote:
-                </strong>
-                <p>
-                    {{ comment.body }}
-                </p>
+        <p class="col-8 align-items-start post-content">
+            {{ post.content | safe }}
+        </p>
+        <div class="row">
+
+            <div class="col-1">
+                <!-- The number of likes goes before the closing strong tag -->
+                <strong class="text-secondary"><i class="far fa-thumbs-up"></i> {{ post.number_of_likes }} </strong>
             </div>
-            {% endfor %}
+            <div class="col-1">
+                {% with comments.count as total_comments %}
+                <strong class="text-secondary"><i class="far fa-comments"></i>
+                    <!-- Our total_comments variable goes before the closing strong tag -->
+                    {{ total_comments }}</strong>
+                {% endwith %}
+            </div>
         </div>
     </div>
-    <div class="m-5 align-items-end">
-        {% if comment %}
-        <div class="alert alert-success" role="alert">
-            Your comment is awaiting approval
+</div>
+<div class="row">
+    <div class="m-5 align-items-start">
+        <h4>Comments:</h4>
+        <br>
+        {% for comment in comments %}
+        <div class="comments">
+            <strong>
+                {{ comment.name }} | {{ comment.created_on }} wrote:
+            </strong>
+            <p>
+                {{ comment.body }}
+            </p>
         </div>
-        {% else %}
-        {% if user.is_authenticated %}
-        <h4>Post a comment:</h4>
-        <p>Commenting as: {{ user.username }}</p>
-        <form method="post">
-            {{ comment_form | crispy }}
-            {% csrf_token %}
-            <button type="submit" class="btn btn-warning form control text-dark right"></button>
-        </form>
-        {% endif %}
-        {% endif %}
-
-
-        
+        {% endfor %}
     </div>
-
+</div>
+<div class="m-5 align-items-end">
+    {% if commented %}
+    <div class="alert alert-success" role="alert">
+        Your comment is awaiting approval
     </div>
+    {% else %}
+    {% if user.is_authenticated %}
+
+    <h4>Post a comment:</h4>
+    <p>Commenting as: {{ user.username }}</p>
+    <form method="post">
+        {{ comment_form | crispy }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning form control text-dark right">Submit</button>
+    </form>
+    {% endif %}
+    {% endif %}
+
+
+
+</div>
+
+</div>
 
 </div>
 </div>
