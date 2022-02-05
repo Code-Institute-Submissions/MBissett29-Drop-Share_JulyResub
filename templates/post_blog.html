@@ -8,32 +8,16 @@
         {% if user.is_authenticated %}
 
         <h2 class="page-title">Post a blog...</h2>
-        <form method="POST" enctype="multipart/form-data" action="{% url 'post_blog' %}">
-            {% csrf_token %}
-            <div class="form-group">
+        <div class="form-group">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'post_blog' %}">
+                {% csrf_token %}
+                {{ UserPost_form | crispy }}
                 <p>
-                    <label for="blog_title">Title of Post:</label>
-                    <input class="form-control" type="text" id="blog_title" name="title">
+                    <button type="submit" class="btn btn-warning">Submit</button>
                 </p>
-            </div>
-            <div class="form-group">
-                <p>
-                    <label for="blog_content">Blog Content:</label>
-                    <textarea class="form-control" id="blog_content" name="content" rows="10"></textarea>
-                </p>
-            </div>
-            <div class="form-group">
-                <label for="add_image_file">Add an image:</label>
-                <input type="file" class="form-control-file" id="add_image_file" name="featured_image">
-              </div>
-            <div class="form-group">
-                <p>
-                    <button type="submit" class="btn btn-info form-control">Submit</button>
-                </p>
-
-            </div>
-
-        </form>
+                
+            </form>
+        </div>
         {% else %}
         <h3>Want to post a blog..?</h3>
         <p>
