@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from .models import Post, Comment
 from .forms import UserPostForm, CommentForm
 from django.utils.text import slugify
+from django.contrib import messages
 
 class PostList(ListView):
     """This creates a list of blog entrys to the main page"""
@@ -85,9 +86,17 @@ class UserPost_Create(CreateView):
     def form_valid(self, form):
         """This saves the blog entry and saves and returns the user"""
         print(self.request.user)
-        form.instance.author = self.request.user
-        form.instance.slug = slugify(form.instance.title)
-        return super().form_valid(form)
+        if form.is_valid:
+            form.instance.author = self.request.user
+            form.instance.slug = slugify(form.instance.title)
+            messages.success(self.request, "Your post is pending approval")
+            return super().form_valid(form)
+        messages.error(self.request, "Error occured please try again")
+        UserPost_form = UserPostForm()
+        context = {'UserPost_form': UserPostForm}
+        return render(request, "post_blog.html", context=context, )
+
+        
 
 class PostLike(View):
     
