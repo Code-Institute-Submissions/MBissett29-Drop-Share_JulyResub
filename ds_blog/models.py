@@ -12,14 +12,17 @@ class Post(models.Model):
 
     title = models.CharField(max_length=180, unique=True)
     slug = models.SlugField(max_length=180, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ds_blog_posts") # Need to think of name
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="ds_blog_posts")
     updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()
     featured_image = CloudinaryField('image', default='placeholder')
     excerpt = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
-    likes = models.ManyToManyField(User, related_name='ds_blog_likes', blank=True)
+    likes = models.ManyToManyField(
+        User, related_name='ds_blog_likes', blank=True)
+
     class Meta:
         """This orders the posts in ascending order"""
         ordering = ['created_on']
@@ -35,11 +38,10 @@ class Post(models.Model):
         """Reflects the number of likes on the specific post"""
         return self.likes.count()
 
-    
 
 class Comment(models.Model):
     """Creates a class base model for the comments"""
-    
+
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=250)
@@ -47,7 +49,7 @@ class Comment(models.Model):
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
-    
+
     class Meta:
         """This orders the comments in descending order"""
         ordering = ['-created_on']
@@ -55,4 +57,3 @@ class Comment(models.Model):
     def __str__(self):
         """This returns the comment body and the users name"""
         return f"Comment {self.body} by {self.name}"
-
