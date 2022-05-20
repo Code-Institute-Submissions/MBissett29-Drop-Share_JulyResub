@@ -6,6 +6,7 @@ from .forms import UserPostForm, CommentForm
 from django.utils.text import slugify
 from django.contrib import messages
 
+
 class PostList(ListView):
     """This creates a list of blog entrys to the main page"""
     model = Post
@@ -18,7 +19,8 @@ class PostDetail(View):
     """This create a detailed view of the blog post in detail"""
 
     def get(self, request, slug, *args, **kwargs):
-        """This gets the combines the comments and blog post and likes together"""
+        """This gets the combines the comments"""
+        """and blog post and likes together"""
         queryset = Post.objects.filter(status=1)
         post = get_object_or_404(queryset, slug=slug)
         comments = post.comments.filter(approved=True).order_by('-created_on')
@@ -39,7 +41,8 @@ class PostDetail(View):
         )
 
     def post(self, request, slug, *args, **kwargs):
-        """This gets the combines the comments and blog post and likes together"""
+        """This gets the combines the comments"""
+        """and blog post and likes together"""
         queryset = Post.objects.filter(status=1)
         post = get_object_or_404(queryset, slug=slug)
         comments = post.comments.filter(approved=True).order_by('-created_on')
@@ -96,10 +99,9 @@ class UserPost_Create(CreateView):
         context = {'UserPost_form': UserPostForm}
         return render(request, "post_blog.html", context=context, )
 
-        
 
 class PostLike(View):
-    
+
     def post(self, request, slug, *args, **kwargs):
         post = get_object_or_404(Post, slug=slug)
         if post.likes.filter(id=request.user.id).exists():

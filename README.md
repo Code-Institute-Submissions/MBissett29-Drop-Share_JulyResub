@@ -71,23 +71,65 @@ This section outlines the various features of the website, from the main page to
   * [Heroku](https://www.heroku.com/what) - is a cloud based application platform to allow projects to be made into apps.
 
 
-## Testiong
+## Testing
+
+This project was put through individual testing, using various validators, things to note that some imports from the various technologies used a certain Rubik font style was flagged as import error errors in the CSS3 Validator. 
 
 1. Validator Testing
-  * W3c Validator 
-  * Jigsaw Validator
-  * PEP8 Validator
+  * [W3C Validator CSS3](https://jigsaw.w3.org/css-validator/validator) - Used to validate CSS code.
+  * [PEP8 Validator](http://pep8online.com/) - Used to validate python code, below are some screen shots of the python code being validated with PEP8 validator which flag up no errors when run.
+  ![Admin.py](static/images/admin-v.png)
+  ![Forms.py](static/images/forms-v.png)
+  ![Models.py](static/images/models-v.png)
+  ![Views.py](static/images/views-v.png)
 
-2. Screen Testing 
-  * Screenshots on various browsers
-  * Screenshots on various devices
+2. Screen Testing  - To test if the website is responsive and works on different devices here are some screen shots of the website working on various platforms and browsers
+  * Screenshots on various browsers such as chrome and safari
+  ![Chrome](static/images/chrome.png)
+  ![Safari](static/images/safari.png)
+
+  * Screenshots on various devices such as a mobile (Pixel 5) and a tablet (Ipad Mini)
+  ![Pixel 5](static/images/pixel-5.png)
+  ![Ipad Mini](static/images/ipad-mini.png)
+
+
 
 
 ## Deployment and Credits 
 
-1. Deployment
-  * Github
+**Deployment**
 
-2. Heroku
-  * Account Creation
-  * Link Github repo to heroku app
+  1. Github is a platform which allows the user to build a website using a repository follow the steps below for account sign up and creating your first repository
+      * Go to [GitHub](www.github.com)
+      * Find the sign up button top left and fill out the relevent information of setting up your account
+      * Once you have created your account you can then start your very first project, you will then be shown your account page and you need to find the green button that says new, it will have a little book icon next to it.
+      * Once you have clicked new you will then be asked to give your new project a name.
+      * Once you have named your project you can select wether to make your project private or public, you can always change this later.
+      * Then you will be redirected to your project page, this will allow you to view all the work you have created, you will see a green button that says create new workspace.
+      * When you have clicked that button it will start to load your workspace
+      * Then you are ready to begin
+
+
+  2. Heroku is a cloud based platform to allow you to link your repositories and create your work into apps for you to show your work off.
+      * Go to [Heroku](https://www.heroku.com/what)
+      * If you havent created an account look for the sign up button.
+      * Follow instructions and fill out the required fields to create account.
+      * Once your account is created you will be sent to your dashboard page where you can see all your apps or in this case an empty page, click the new button.
+      * You will have the option to create a new app or pipeline, in this case click new app, give it a name and the location of where you are currently.
+      * When the app is created you will be taken to the main app page, where you will have many option of what you need to do.
+      * First you will need to link your github profile and repository, click the deploy tab, once clicked you will be able to see the github logo, once clicked follow the instructions of linking your account and then linking your specific repository.
+      * Great your github account is now linked.
+      * From here go to your settings tab to connect your config vars and all the secret keys that maybe needed for your deployment.
+      * To deploy your app with heroku you will need to link your heroku through your terminal in your Gitpod Workspace. Once there type the following commands:
+        * heroku login -i (it will ask the email and password you created on heroku)
+        * heroku git:remote -a app-name  (only the first time you connect the app to Heroku in your terminal... skip all other times)
+        * git push heroku main (this will push all the changes from the main repo to also the linked heroku page)
+      * This will load and give you a run down in the terminal if it was succesful or a failed upload.
+
+**Credit**
+
+1. All images used were either from copyright free websites and screenshots from the local host computer of the work that was done.
+
+2. The Styling for the website was taken from Bootstrap, Google fonts, Font Awesome
+
+3. The site where the [Mockup design] image at the top was from.
